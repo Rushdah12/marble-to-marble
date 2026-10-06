@@ -123,14 +123,14 @@
     return img;
   }
 
-  const sandBgImg = createAssetImage(assets.sandBg, 'design/beach-sand.jpg');
-  const shellScallopImg = createAssetImage(assets.shellScallop, 'design/shell-scallop.png');
-  const shellStarfishImg = createAssetImage(assets.shellStarfish, 'design/shell-starfish.png');
-  const shellSanddollarImg = createAssetImage(assets.shellSanddollar, 'design/shell-sanddollar.png');
-  const shellSpiralImg = createAssetImage(assets.shellSpiral, 'design/shell-spiral.png');
-  const pebbleTanImg = createAssetImage(assets.pebbleTan, 'design/pebble-tan.png');
-  const pebbleTerraImg = createAssetImage(assets.pebbleTerra, 'design/pebble-terracotta.png');
-  const pebbleGraniteImg = createAssetImage(assets.pebbleGranite, 'design/pebble-granite.png');
+  const sandBgImg = createAssetImage(assets.sandBg, 'graphic-assets/beach-sand.jpg');
+  const shellScallopImg = createAssetImage(assets.shellScallop, 'graphic-assets/shell-scallop.png');
+  const shellStarfishImg = createAssetImage(assets.shellStarfish, 'graphic-assets/shell-starfish.png');
+  const shellSanddollarImg = createAssetImage(assets.shellSanddollar, 'graphic-assets/shell-sanddollar.png');
+  const shellSpiralImg = createAssetImage(assets.shellSpiral, 'graphic-assets/shell-spiral.png');
+  const pebbleTanImg = createAssetImage(assets.pebbleTan, 'graphic-assets/pebble-tan.png');
+  const pebbleTerraImg = createAssetImage(assets.pebbleTerra, 'graphic-assets/pebble-terracotta.png');
+  const pebbleGraniteImg = createAssetImage(assets.pebbleGranite, 'graphic-assets/pebble-granite.png');
 
   // --- Realistic Physical Sound Engine (Glass Marbles & Beach Sand) ---
   const SoundEngine = (() => {
@@ -170,13 +170,13 @@
 
       // Fallback in case DOM wasn't ready
       if (shakeAudios.length === 0) {
-        shakeAudios = [new Audio('design/marble-shake.wav'), new Audio('design/marble-shake.wav')];
+        shakeAudios = [new Audio('graphic-assets/marble-shake.wav'), new Audio('graphic-assets/marble-shake.wav')];
       }
       if (clinkAudios.length === 0) {
-        clinkAudios = [new Audio('design/marble-clink.wav'), new Audio('design/marble-clink.wav')];
+        clinkAudios = [new Audio('graphic-assets/marble-clink.wav'), new Audio('graphic-assets/marble-clink.wav')];
       }
       if (slideAudios.length === 0) {
-        slideAudios = [new Audio('design/sand-slide.wav')];
+        slideAudios = [new Audio('graphic-assets/sand-slide.wav')];
       }
 
       // Preload & prime all audio elements
