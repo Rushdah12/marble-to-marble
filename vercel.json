@@ -2,7 +2,7 @@
   "version": 2,
   "headers": [
     {
-      "source": "/design/(.*)",
+      "source": "/graphic-assets/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
