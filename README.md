@@ -2,8 +2,6 @@
 
 An artisanal beach sandbox playground. Shake the tray to scatter marbles, connect them by carving furrows into damp sand, paint with powdery beach chalk, and export high-resolution keepsake artwork.
 
-![Marble-to-Marble Playground](design/background-1.jpg)
-
 ## Features
 
 - **Realistic Artisanal Glass Marbles**: 3D spherical glass rendering with trapped micro-bubbles, sun glints, and refractive sand caustics.
