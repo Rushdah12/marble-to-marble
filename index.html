@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Marble-to-Marble — A creative sandbox toy. Shake the tray, connect the marbles, and draw on the sand.">
+  <title>Marble-to-Marble</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Give+You+Glory&family=Lacquer&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient beach sunlight effect -->
+  <div class="sunlight-overlay" aria-hidden="true"></div>
+
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="header">
+      <h1 class="app-title" id="appTitle">Marble-to-Marble</h1>
+      <div class="header-actions">
+        <button class="header-action-btn download-btn" id="downloadBtn" type="button" aria-label="Download Drawing as PNG" title="Download Drawing as PNG">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
+        <button class="header-action-btn sound-toggle-btn" id="soundToggleBtn" type="button" aria-label="Toggle sound effects" title="Toggle realistic sound effects">
+          <svg class="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg class="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Playground Stage -->
+    <main class="playground">
+      <!-- Hand-Drawn Sand Furrow Arena -->
+      <div class="chalk-arena" id="chalkArena">
+        <canvas id="canvas"></canvas>
+      </div>
+
+      <!-- Bottom Controls: Real Beach Rocks in Sand -->
+      <nav class="bottom-controls" aria-label="Controls">
+        <button class="rock-btn rock-granite" id="btnMoreMarbles" type="button" aria-label="Add more marbles">
+          <img class="rock-img" src="design/rock-granite.png" alt="" aria-hidden="true">
+          <span class="rock-label">more marbles</span>
+        </button>
+        <button class="rock-btn rock-terracotta" id="btnLessMarbles" type="button" aria-label="Remove marbles">
+          <img class="rock-img" src="design/rock-terracotta.png" alt="" aria-hidden="true">
+          <span class="rock-label">less marbles</span>
+        </button>
+        <button class="rock-btn rock-amber" id="btnShake" type="button" aria-label="Shake marbles">
+          <img class="rock-img" src="design/rock-amber.png" alt="" aria-hidden="true">
+          <span class="rock-label">shake it!</span>
+        </button>
+        <button class="rock-btn-clear" id="btnClear" type="button" title="Clear all drawing lines (Ctrl+Z to undo)" aria-label="Clear lines">
+          <img class="rock-clear-img" src="design/rock-clear.png" alt="" aria-hidden="true">
+          <svg class="rock-clear-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18"></path>
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
+        </button>
+      </nav>
+    </main>
+
+    <!-- Right Slide-Out Panel Tab -->
+    <aside class="side-panel-wrapper" id="sidePanelWrapper">
+      <button class="side-panel-tab" id="sidePanelTab" type="button" aria-label="Open Marbles & Colours panel" title="Marbles & Colours">
+        <svg class="tab-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <div class="side-panel" id="sidePanel">
+        <div class="panel-header">
+          <h2 class="panel-title">MARBLES & COLOURS</h2>
+          <button class="panel-close-btn" id="panelCloseBtn" type="button" aria-label="Close panel">✕</button>
+        </div>
+        <div class="panel-body">
+          <!-- Powder Chalk Colors Accordion Section (Initially Collapsed) -->
+          <div class="panel-section chalk-section is-collapsed" id="chalkAccordion">
+            <button class="panel-section-header chalk-accordion-trigger" id="chalkAccordionTrigger" type="button" aria-expanded="false" aria-controls="chalkAccordionBody">
+              <div class="accordion-title-group">
+                <svg class="accordion-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+                <span class="section-title">Powder Chalk</span>
+              </div>
+              <span class="chalk-indicator-circle is-empty" id="chalkModeCircle" aria-label="Toggle active chalk color or carve mode" title="Color status indicator (click to toggle)"></span>
+            </button>
+
+            <div class="chalk-accordion-body" id="chalkAccordionBody">
+              <!-- Slanted Chalk Swipes (3 columns x 5 rows = 15 colors including black) -->
+              <div class="chalk-palette" role="radiogroup" aria-label="Powder chalk colors">
+                <!-- Row 1 -->
+                <button class="chalk-color-btn chalk-red" data-color="red" type="button" title="Coral Red" aria-label="Coral Red">
+                  <span class="chalk-swipe-swatch swatch-red"></span>
+                </button>
+                <button class="chalk-color-btn chalk-green" data-color="green" type="button" title="Meadow Green" aria-label="Meadow Green">
+                  <span class="chalk-swipe-swatch swatch-green"></span>
+                </button>
+                <button class="chalk-color-btn chalk-blue" data-color="blue" type="button" title="Ocean Blue" aria-label="Ocean Blue">
+                  <span class="chalk-swipe-swatch swatch-blue"></span>
+                </button>
+
+                <!-- Row 2 -->
+                <button class="chalk-color-btn chalk-black" data-color="black" type="button" title="Charcoal Black" aria-label="Charcoal Black">
+                  <span class="chalk-swipe-swatch swatch-black"></span>
+                </button>
+                <button class="chalk-color-btn chalk-orange" data-color="orange" type="button" title="Marigold Orange" aria-label="Marigold Orange">
+                  <span class="chalk-swipe-swatch swatch-orange"></span>
+                </button>
+                <button class="chalk-color-btn chalk-teal" data-color="teal" type="button" title="Sea Teal" aria-label="Sea Teal">
+                  <span class="chalk-swipe-swatch swatch-teal"></span>
+                </button>
+
+                <!-- Row 3 -->
+                <button class="chalk-color-btn chalk-pink" data-color="pink" type="button" title="Rose Pink" aria-label="Rose Pink">
+                  <span class="chalk-swipe-swatch swatch-pink"></span>
+                </button>
+                <button class="chalk-color-btn chalk-lime" data-color="lime" type="button" title="Lime Olive" aria-label="Lime Olive">
+                  <span class="chalk-swipe-swatch swatch-lime"></span>
+                </button>
+                <button class="chalk-color-btn chalk-sky" data-color="sky" type="button" title="Sky Blue" aria-label="Sky Blue">
+                  <span class="chalk-swipe-swatch swatch-sky"></span>
+                </button>
+
+                <!-- Row 4 -->
+                <button class="chalk-color-btn chalk-grey" data-color="grey" type="button" title="Slate Grey" aria-label="Slate Grey">
+                  <span class="chalk-swipe-swatch swatch-grey"></span>
+                </button>
+                <button class="chalk-color-btn chalk-yellow" data-color="yellow" type="button" title="Sunburst Yellow" aria-label="Sunburst Yellow">
+                  <span class="chalk-swipe-swatch swatch-yellow"></span>
+                </button>
+                <button class="chalk-color-btn chalk-mint" data-color="mint" type="button" title="Fresh Mint" aria-label="Fresh Mint">
+                  <span class="chalk-swipe-swatch swatch-mint"></span>
+                </button>
+
+                <!-- Row 5 -->
+                <button class="chalk-color-btn chalk-terracotta" data-color="terracotta" type="button" title="Terracotta Clay" aria-label="Terracotta Clay">
+                  <span class="chalk-swipe-swatch swatch-terracotta"></span>
+                </button>
+                <button class="chalk-color-btn chalk-purple" data-color="purple" type="button" title="Wild Lavender" aria-label="Wild Lavender">
+                  <span class="chalk-swipe-swatch swatch-purple"></span>
+                </button>
+                <button class="chalk-color-btn chalk-white" data-color="white" type="button" title="Chalk White" aria-label="Chalk White">
+                  <span class="chalk-swipe-swatch swatch-white"></span>
+                </button>
+              </div>
+
+              <!-- Width (circles) & Eraser Icon -->
+              <div class="chalk-subcontrols">
+                <div class="chalk-size-picker" role="radiogroup" aria-label="Chalk stroke width">
+                  <span class="subcontrol-label">width</span>
+                  <button class="size-btn size-sm" data-size="10" type="button" title="Fine (10px)" aria-label="Fine width">
+                    <span class="size-circle circle-sm"></span>
+                  </button>
+                  <button class="size-btn size-md is-active" data-size="18" type="button" title="Medium (18px)" aria-label="Medium width">
+                    <span class="size-circle circle-md"></span>
+                  </button>
+                  <button class="size-btn size-lg" data-size="32" type="button" title="Wide (32px)" aria-label="Wide width">
+                    <span class="size-circle circle-lg"></span>
+                  </button>
+                </div>
+                <button class="chalk-eraser-btn" id="btnClearChalk" type="button" title="Eraser tool (drag across strokes to erase)" aria-label="Eraser tool">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"></path>
+                    <path d="M22 21H7"></path>
+                    <path d="m5 11 9 9"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Redesigned Side-by-Side Stat Cards (matching wireframe) -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-card-label">marbles<br>on sand</span>
+              <span class="stat-card-value" id="marbleCountDisplay">38</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card-label">connections<br>drawn</span>
+              <span class="stat-card-value" id="connectionCountDisplay">0</span>
+            </div>
+          </div>
+
+          <!-- Redesigned Download Drawing Card Button (matching wireframe) -->
+          <button class="panel-download-card-btn" id="panelDownloadBtn" type="button">
+            <span>Download Drawing</span>
+          </button>
+
+          <!-- Tip -->
+          <p class="panel-hint">Tip: Drag chalk to paint colors. Press <kbd>Ctrl+Z</kbd> to undo.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Preloaded Audio Elements for Instant, Guaranteed Playback -->
+  <div id="audioContainer" style="display: none;" aria-hidden="true">
+    <audio id="audioShake1" src="design/marble-shake.wav" preload="auto"></audio>
+    <audio id="audioShake2" src="design/marble-shake.wav" preload="auto"></audio>
+    <audio id="audioClink1" src="design/marble-clink.wav" preload="auto"></audio>
+    <audio id="audioClink2" src="design/marble-clink.wav" preload="auto"></audio>
+    <audio id="audioClink3" src="design/marble-clink.wav" preload="auto"></audio>
+    <audio id="audioSlide1" src="design/sand-slide.wav" preload="auto"></audio>
+    <audio id="audioSlide2" src="design/sand-slide.wav" preload="auto"></audio>
+  </div>
+
+  <script src="sand-assets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
