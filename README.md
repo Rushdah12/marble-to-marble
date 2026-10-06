@@ -20,9 +20,3 @@ An artisanal beach sandbox playground. Shake the tray to scatter marbles, connec
 - **Typography**: Google Fonts (*Give You Glory*, *Lacquer*, *Outfit*)
 - **Zero Build Tooling**: Pure client-side static application — no bundler, no transpiler, and zero dependencies.
 
-## Deployment on Vercel
-
-1. Push this repository to GitHub.
-2. In your [Vercel Dashboard](https://vercel.com/new), click **Add New Project** and select this repository.
-3. Keep the default settings (**Framework Preset**: `Other`, **Root Directory**: `./`).
-4. Click **Deploy**. Vercel will deploy the static site immediately.
