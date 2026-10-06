@@ -42,7 +42,7 @@ body {
   background-color: #c9a374;
   background-image:
     radial-gradient(ellipse 90% 65% at 20% 12%, rgba(255, 252, 240, 0.35) 0%, transparent 65%),
-    url('design/beach-sand.jpg');
+    url('graphic-assets/beach-sand.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
